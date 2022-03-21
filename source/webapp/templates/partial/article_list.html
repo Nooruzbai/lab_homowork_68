@@ -21,16 +21,22 @@
 
     <div class="counter" id="{{ article.id }}">{{ article.users.count }}</div>
 
+
+    {% if user.is_authenticated %}
+
     {% if request.user not in article.users.all %}
-        <button class="like" id="like" onclick="Like(event)" data-id="{{ article.id }}"
-                data-articles-url="{% url "webapp:article_like_unlike" article.pk %}">Like
+        <button class="like" id="like" onclick="LikeArticle(event)" data-id="{{ article.id }}"
+                data-articles-url="{% url "webapp:article_like_unlike" article.pk %}">like
         </button>
     {% else %}
-        <button class="unlike" id="like" onclick="Like(event)" data-id="{{ article.id }}"
-                data-articles-url="{% url "webapp:article_like_unlike" article.pk %}">Unlike
+        <button class="unlike" id="unlike" onclick="LikeArticle(event)" data-id="{{ article.id }}"
+                data-articles-url="{% url "webapp:article_like_unlike" article.pk %}">unlike
         </button>
 
     {% endif %}
+
+    {% endif %}
+
 
     {% empty %}
     <p>Статьи не найдены...</p>

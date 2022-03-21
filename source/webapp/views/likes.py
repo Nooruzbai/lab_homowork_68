@@ -1,10 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.views import View
 
 from webapp.models import Article, User, Comment
 
 
-class ArticleLikeUnlike(View):
+class ArticleLikeUnlike(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         article = Article.objects.get(id=self.kwargs.get('pk'))
@@ -19,7 +20,7 @@ class ArticleLikeUnlike(View):
             return JsonResponse({"like_quantity": article.users.count()})
 
 
-class CommentLikeUnlike(View):
+class CommentLikeUnlike(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         comment = Comment.objects.get(id=self.kwargs.get('pk'))
