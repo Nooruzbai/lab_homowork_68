@@ -18,7 +18,21 @@
         <p><a href="{% url "webapp:article_delete_view" article.pk %}">Удалить</a></p>
     {% endif %}
 
-{% empty %}
+
+    <div class="counter" id="{{ article.id }}">{{ article.users.count }}</div>
+
+    {% if request.user not in article.users.all %}
+        <button class="like" id="like" onclick="Like(event)" data-id="{{ article.id }}"
+                data-articles-url="{% url "webapp:article_like_unlike" article.pk %}">Like
+        </button>
+    {% else %}
+        <button class="unlike" id="like" onclick="Like(event)" data-id="{{ article.id }}"
+                data-articles-url="{% url "webapp:article_like_unlike" article.pk %}">Unlike
+        </button>
+
+    {% endif %}
+
+    {% empty %}
     <p>Статьи не найдены...</p>
 {% endfor %}
 

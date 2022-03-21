@@ -22,13 +22,8 @@ class Article(BaseModel):
     title = models.CharField(max_length=200, null=False, blank=False, verbose_name="Заголовок")
     content = models.TextField(max_length=2000, null=False, blank=False, verbose_name="Контент")
     tags = models.ManyToManyField("webapp.Tag", related_name="articles")
-    author = models.ForeignKey(
-        User,
-        related_name="articles",
-        on_delete=models.SET_DEFAULT,
-        default=1,
-        verbose_name="Автор",
-    )
+    author = models.ForeignKey(User, related_name="articles", on_delete=models.SET_DEFAULT, default=1, verbose_name="Автор")
+    users = models.ManyToManyField(User, related_name='article_s')
 
     def get_absolute_url(self):
         return reverse('webapp:article_view', kwargs={'pk': self.pk})
@@ -59,17 +54,9 @@ class Tag(BaseModel):
 
 class Comment(BaseModel):
     content = models.TextField(max_length=2000, verbose_name="Контент")
-    author = models.ForeignKey(
-        User,
-        related_name="comments",
-        default=1,
-        on_delete=models.CASCADE,
-        verbose_name="Автор"
-    )
-    article = models.ForeignKey("webapp.Article", on_delete=models.CASCADE,
-                                related_name="comments",
-                                verbose_name="Статья",
-                                )
+    author = models.ForeignKey(User, related_name="comments", default=1, on_delete=models.CASCADE, verbose_name="Автор")
+    article = models.ForeignKey("webapp.Article", on_delete=models.CASCADE, related_name="comments", verbose_name="Статья")
+    users = models.ManyToManyField(User, related_name='comment_s')
 
     class Meta:
         db_table = 'comments'

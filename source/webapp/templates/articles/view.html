@@ -32,6 +32,31 @@
         <p>{{ comment.author }}</p>
         <p>{{ comment.content }}</p>
 
+
+        {#        <div class="counter" id="{{ article.id }}">{{ article.users.count }}</div>#}
+        {#        <button class="like" id="like" onclick="Like(event)" data-id="{{ article.id }}"#}
+        {#                #}
+        {#                data-articles-url="{% url "webapp:article_like_unlike" article.pk %}">Like#}
+        {#        #}
+        {#        </button>#}
+
+
+        <div class="comment_counter" id="{{ comment.id }}">{{ comment.users.count }}</div>
+
+
+
+
+        <button class="like" id="like" onclick="LikeComment(event)" data-id="{{ comment.id }}"
+                data-articles-url="{% url "webapp:comment_like_unlike" comment.pk %}">Like Comment
+        </button>
+
+        <button class="like" id="like" onclick="LikeComment(event)" data-id="{{ comment.id }}"
+                data-articles-url="{% url "webapp:comment_like_unlike" comment.pk %}">Unlike Comment
+        </button>
+
+
+
+
         {% if perms.webapp.change_comment or user == commnet.author %}
             <p><a href="{% url "webapp:comment_update_view" comment.pk %}">Изменить</a></p>
         {% endif %}
