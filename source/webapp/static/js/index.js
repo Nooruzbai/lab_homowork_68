@@ -18,6 +18,7 @@ let LikeArticle = async function (event) {
     let url = event.target.dataset.articlesUrl;
 
     let data = await make_request(url)
+     console.log()
     let counter = document.getElementById(`${event.target.dataset.id}`);
     counter.innerText = `${data.like_quantity}`
     let like_button = document.getElementById('like')
